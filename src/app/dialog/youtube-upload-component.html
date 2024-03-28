@@ -1,0 +1,96 @@
+<mat-dialog-content>
+  <h1>Upload Your Video</h1>
+  <div fxLayout="column" fxLayoutGap="30px">
+    <div *ngIf="this.userProfile" fxLayout="row" fxLayoutAlign="space-between center">
+      <p style="margin-top: 1vh">
+        Your Connected Account is:
+        <strong> {{ this.userProfile.getEmail() }}</strong>
+      </p>
+
+      <button (click)="this.signIn()" label="Change Account" mat-button>
+        Change Account
+      </button>
+    </div>
+    <div *ngIf="this.userProfile && !this.YoutubePermission">
+      <p>
+        You Have Not Given me Permission. Permission Required For Youtube
+        Uploading
+      </p>
+    </div>
+    <form
+      *ngIf="this.userProfile && this.YoutubePermission"
+      [formGroup]="this.videoForm"
+      fxLayout="column"
+      fxLayoutGap="30px"
+      fxLayoutAlign="center stretch"
+      (ngSubmit)="
+      this.videoForm.get('PrivacyStatus')?.markAsTouched();
+      videoForm.valid && upload()
+    "
+    >
+      <mat-form-field>
+        <input
+          formControlName="title"
+          matInput
+          placeholder="Enter Your Title"
+        />
+        <mat-error>Title is Required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <textarea
+          formControlName="description"
+          matInput
+          placeholder="Enter Your Description (optional)"
+        ></textarea>
+        <mat-error>description is Required</mat-error>
+      </mat-form-field>
+
+      <mat-radio-group formControlName="PrivacyStatus">
+        <mat-radio-button
+          value="unlisted"
+          matTooltip="Only People to Whom you share your Video"
+          >Keep It Private
+        </mat-radio-button>
+        <mat-radio-button
+          value="public"
+          matTooltip="Only People to Whom you share your Video"
+          >Make It Public
+        </mat-radio-button>
+      </mat-radio-group>
+      <div fxLayout="column" fxLayoutGap="20px" *ngIf="this.loading">
+        <mat-progress-bar
+          mode="determinate"
+          [value]="percentageUpload"
+          [bufferValue]="100"
+        ></mat-progress-bar>
+
+        <p-button
+          label="cancel"
+          icon="pi pi-cancel"
+          type="button"
+          (click)="this.cancel()"
+          class="custom-margin-top"
+          fxLayoutAlign="end"
+        ></p-button>
+      </div>
+      <div *ngIf="!this.loading">
+        <p-button
+          label="Upload "
+          icon="pi pi-upload"
+          type="button"
+          (click)="this.upload()"
+          class="custom-margin-top"
+        ></p-button>
+      </div>
+    </form>
+    <div *ngIf="this.authCheck && !this.userProfile && !this.YoutubePermission">
+      <p-button
+        label="Change"
+        icon="pi pi-cache"
+        type="button"
+        (click)="this.signIn()"
+        class="custom-margin-top"
+      ></p-button>
+    </div>
+  </div>
+</mat-dialog-content>

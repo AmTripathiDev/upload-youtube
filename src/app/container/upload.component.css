@@ -1,0 +1,18 @@
+.upload {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .custom-margin-top {
+    margin-top: 1.6%;
+  }
+
+  .uploaded-video {
+    margin-top: 20px;
+  }
+  
+  .video-label {
+    font-weight: bold;
+    margin-right: 10px;
+  }

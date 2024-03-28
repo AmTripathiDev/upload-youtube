@@ -1,0 +1,84 @@
+<div style="width: 100%; height: 80%">
+  <div class="upload">
+    <h2>Select Video From Computer</h2>
+    <p>(select media from your device which you want to upload)</p>
+
+    <div *ngIf="!this.videoSelected" class="card flex justify-content-center">
+      <input
+        #videoFile
+        name="video"
+        type="file"
+        (change)="this.SelectVideo($event)"
+        [hidden]="true"
+        accept="mp4"
+      />
+
+      <button
+        mat-raised-button
+        color="primary"
+        label="Select Video"
+        icon="pi pi-plus"
+        type="File"
+        (click)="this.PickFile()"
+      >
+        Select Video
+      </button>
+    </div>
+
+    <div [hidden]="!this.videoSelected">
+      <video
+        *ngIf="!this.isUpload && this.videoUrl"
+        [src]="this.videoUrl"
+        controls
+        width="400px"
+        height="400px"
+        #video
+      >
+        Your Browser Does Not Support
+      </video>
+      <iframe
+        *ngIf="this.isUpload"
+        [src]="this.videoUrl"
+        width="100px"
+        height="100px"
+        allowfullscreen="true"
+      ></iframe>
+    </div>
+
+    <div *ngIf="this.videoSelected" class="upload">
+      <input
+        #videoFile
+        name="video"
+        type="file"
+        (change)="this.SelectVideo($event)"
+        [hidden]="true"
+        accept="mp4"
+      />
+      <p-button
+        *ngIf="!this.isUpload && !this.UploadedVideoUrl"
+        label="change"
+        icon="pi pi-cache"
+        type="File"
+        (onClick)="this.PickFile()"
+        class="custom-margin-top"
+      ></p-button>
+
+      <p-button
+        *ngIf="!this.isUpload && !this.UploadedVideoUrl"
+        label="Youtube To Submit"
+        icon="pi pi-external-link"
+        type="File"
+        (onClick)="this.UploadToSubmit()"
+        class="custom-margin-top"
+      ></p-button>
+
+      <p *ngIf="UploadedVideoUrl" class="uploaded-video">
+        <span class="video-label">Your Uploaded Video Url:</span>
+        <a mat-button href="{{ UploadedVideoUrl }}" target="_blank"
+          >{{ UploadedVideoUrl }}
+        </a>
+        <a mat-button target="_blank" (click)="reload()">Go Back To Home </a>
+      </p>
+    </div>
+  </div>
+</div>
