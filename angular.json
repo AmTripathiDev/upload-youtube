@@ -16,7 +16,6 @@
             "customWebpackConfig": {
               "path": "./custom-webpack.config.ts"
             },
-
             "outputPath": "dist/my-youtube-upload-app",
             "index": "src/index.html",
             "main": "src/main.ts",

@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:latest
+FROM jellydn/alpine-nodejs:20 
 
 WORKDIR /YoutubeUpload
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 4200
 
-CMD ["ng", "serve"]
+CMD ["npm", "start"]
